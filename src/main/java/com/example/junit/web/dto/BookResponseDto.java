@@ -1,6 +1,7 @@
 package com.example.junit.web.dto;
 
 import com.example.junit.domain.Book;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

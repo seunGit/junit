@@ -4,7 +4,9 @@ import com.example.junit.domain.Book;
 import com.example.junit.domain.BookRepository;
 import com.example.junit.web.dto.BookResponseDto;
 import com.example.junit.web.dto.BookSaveRequestDto;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +26,14 @@ public class BookService {
         Book bookPS = bookRepository.save(dto.toEntity());
         return new BookResponseDto().toDto(bookPS);
     }
+
     // 2. 책 목록보기
     public List<BookResponseDto> 책목록보기() {
         return bookRepository.findAll().stream()
                 .map(new BookResponseDto()::toDto)
                 .collect(Collectors.toList());
     }
+
     // 3. 책 한건 보기
     public BookResponseDto 책한건보기(Long id){
         Optional<Book> bookOP = bookRepository.findById(id);
@@ -39,6 +43,7 @@ public class BookService {
             throw new RuntimeException("해당 아이디를 찾을 수 없습니다.");
         }
     }
+
     // 4. 책 삭제
     @Transactional(rollbackFor = RuntimeException.class)
     public void 책삭제하기(Long id) { // 4
@@ -46,4 +51,14 @@ public class BookService {
     }
 
     // 5. 책 수정
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void 책수정하기(Long id, BookSaveRequestDto dto) {
+        Optional<Book> bookOP = bookRepository.findById(id);
+        if(bookOP.isPresent()) {
+            Book bookPS = bookOP.get();
+            bookPS.update(dto.getTitle(), dto.getAuthor());
+        } else {
+            throw new RuntimeException("해당  아이디를 찾을 수 없습니다.");
+        }
+    }  // 매서드 종료시에 더티체킹(flush)으로 update 됩니다.
 }
