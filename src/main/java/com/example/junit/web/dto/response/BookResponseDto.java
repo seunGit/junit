@@ -1,4 +1,4 @@
-package com.example.junit.web.dto;
+package com.example.junit.web.dto.response;
 
 import com.example.junit.domain.Book;
 
