@@ -90,10 +90,10 @@ public class BookServiceTest {
     public void 책한건보기_테스트() {
         // given
         Long id = 1L;
-        Book book = new Book(1L, "junit강의", "seunGit");
-        Optional<Book> bookOP = Optional.of(book);
 
         // stub
+        Book book = new Book(1L, "junit강의", "seunGit");
+        Optional<Book> bookOP = Optional.of(book);
         when(bookRepository.findById(id)).thenReturn(bookOP);
 
         // when
@@ -107,5 +107,25 @@ public class BookServiceTest {
         System.out.println("bookResponseDto.getAuthor() : " + bookResponseDto.getAuthor());
         System.out.println("book.getTitle() : " + book.getTitle());
         System.out.println("book.getAuthor() : " + book.getAuthor());
+    }
+
+    @Test
+    public void 책수정하기_테스트() {
+        // given
+        Long id = 1L;
+        BookSaveRequestDto dto = new BookSaveRequestDto();
+        dto.setTitle("spring강의");  // junit 강의
+        dto.setAuthor("seunGit2");  // seunGit
+        // stub
+        Book book = new Book(1L, "junit강의", "seunGit");
+        Optional<Book> bookOP = Optional.of(book);
+        when(bookRepository.findById(id)).thenReturn(bookOP);
+
+        // when
+        BookResponseDto bookResponseDto = bookService.책수정하기(id, dto);
+
+        // then
+        assertThat(bookResponseDto.getTitle()).isEqualTo(dto.getTitle());
+        assertThat(bookResponseDto.getAuthor()).isEqualTo(dto.getAuthor());
     }
 }
