@@ -4,8 +4,10 @@ import com.example.junit.service.BookService;
 import com.example.junit.web.dto.response.BookResponseDto;
 import com.example.junit.web.dto.request.BookSaveRequestDto;
 import com.example.junit.web.dto.response.CMResponseDto;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +50,7 @@ public class BookApiController {
         return new ResponseEntity<>(CMResponseDto.builder().code(1).msg("책 등록 성공").body(bookResponseDto).build(),
                 HttpStatus.CREATED); // 201 = insert
     }
+
     // 2. 책 목록보기
     public ResponseEntity<?> getBookList() {
         return null;
